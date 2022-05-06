@@ -83,12 +83,15 @@ class TutoManager extends Manager
 
        // Modification d'un tuto en BDD
 
+       $dbh = static::connectDb();
+        $sth = $dbh->prepare('UPDATE tutos SET title = :title ,description = :description where id = :id ');
+        parse_str(file_get_contents('php://input'), $_PATCH);
+
+        $sth->bindParam(':id', $id);
+        $sth->bindParam(':title', $_PATCH['title']);
+        $sth->bindParam(':description', $_PATCH['description']);
+        $sth->execute();
+    
     }
-
-
-
-
-
-
 
 }

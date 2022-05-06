@@ -22,6 +22,7 @@ class tutoController extends abstractController
 
         return $this->jsonResponse($tuto, 200);
     }
+    
 
     public function index()
     {
@@ -39,8 +40,15 @@ class tutoController extends abstractController
     {
 
         // Ajout d'un tuto
+        $tuto = new Tuto();
+        $tuto->setTitle($POST["title"]);
+        $tuto->setDescription($_POST["description"]);
+        $now = new \DateTime();
+        $dateString = strftime("%Y-%m-%d", $now->getTimestamp());
+        $tuto->setCreatedAt(strftime("%Y-%m-%d", $dateString));
 
-        $tuto = [];
+        $manager = new TutoManager();
+        $tuto = $manager->add($tuto);
 
         // TODO: ajout d'un tuto
 
